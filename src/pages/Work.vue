@@ -1,0 +1,109 @@
+<template>
+  <div class="container">
+    <div class="project" v-for="(edge, index) in $page.allPageProject.edges" :key="edge.node.id">
+      <g-link class="grid project__link" :to="edge.node.path">
+        <h3 class="project__heading heading heading--1 col-desk-2 inverse">
+          {{ edge.node.content.title }}
+        </h3>
+        <div class="col-desk-3">
+        <r-img 
+          :image="edge.node.content.main_image"
+          class="project__image"
+          :alt="`${edge.node.title} main image`"
+        />
+        </div>
+        <div class="line col-desk-6 inverse"/>
+        <p class="col-desk-2 project__details project__details--count inverse">
+          {{index +1}}/{{$page.allPageProject.edges.length}}
+        </p>
+        <p class="project__details project__details--year col-desk-2 col-desk-shift-2 inverse">
+          2019
+        </p>
+      </g-link>
+    </div>
+  </div>
+</template>
+
+<script>
+import resizedImage from '~/components/resizedImage.vue'
+
+export default {
+  name: 'Work',
+  components: {
+    'r-img': resizedImage
+  },
+
+}
+</script>
+
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: $margin-top-phone $margin-side-phone;
+
+  @include breakpoint(tablet, min) {
+    padding: $margin-top-tablet $margin-side-tablet;
+  }
+}
+
+.project {
+
+  position: relative;
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__heading {
+    font-size: 3rem;
+    font-weight: 300;
+
+    margin: 0;
+    align-self: flex-end;
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+  }
+
+  &__details {
+    position: relative;
+
+    &--year {
+      text-align: right;
+    }
+
+  }
+
+  &:not(:last-child) {
+    margin-bottom: $margin-top-phone;
+
+    @include breakpoint(tablet, min) {
+      margin-bottom: $margin-top-tablet;
+    }
+  }
+}
+</style>
+
+<page-query>
+query {
+  allPageProject {
+    edges {
+      node {
+        id
+        path
+        content {
+          title,
+          main_image
+        }
+      }
+    }
+  }
+}
+</page-query>

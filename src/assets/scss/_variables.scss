@@ -1,0 +1,50 @@
+// BREAKPOINTS
+$breakpoints: (
+  phone: 620px,
+  tablet: 1020px,
+  desktop: 1400px
+);
+
+// GRID
+// desktop grid
+$grid-desktop-columns: 6;
+$grid-desktop-sideMargin: 0px;
+$grid-desktop-gutter: 40px;
+$grid-desktop-breakpoint: map-get($breakpoints, desktop);
+
+// tablet grid
+$grid-tablet-columns: 6;
+$grid-tablet-sideMargin: 0px;
+$grid-tablet-gutter: 30px;
+$grid-tablet-breakpoint: map-get($breakpoints, tablet);
+
+// mobile grid
+$grid-mobile-columns: 4;
+$grid-mobile-sideMargin: 0px;
+$grid-mobile-gutter: 16px;
+$grid-mobile-breakpoint: map-get($breakpoints, phone);
+
+// MARGINS
+$margin-side-desktop: 122px;
+$margin-side-tablet: 122px;
+$margin-side-phone: 41px;
+
+$margin-top-desktop: 80px;
+$margin-top-tablet: 80px;
+$margin-top-phone: 30px;
+
+$margin-gutter-desktop: 40px;
+$margin-gutter-tablet: 40px;
+$margin-gutter-phone: 16px;
+
+// COLORS
+$primary: #000117;
+$inverse: #EDEDED;
+
+$color-text-primary: $primary;
+$color-text-inverse: $inverse;
+$background-color: $inverse;
+$background-color-inverse: $primary;
+
+// FONT AND TEXT
+$font-family: 'Now Alt';
