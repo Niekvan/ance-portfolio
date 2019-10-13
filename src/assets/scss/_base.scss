@@ -8,17 +8,22 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-align: left;
   scroll-behavior: smooth;
+
+  @include breakpoint(tablet, max) {
+    font-size: 62.5%;
+  }
+
+  @include breakpoint(phone, max) {
+    // font-size: 50%;
+  }
 }
 
 body {
   width: 100%;
 }
 
-// img {
-//   max-width: 100%;
-// }
-
 .line {
+  display: block;
   height: 2px;
   background: $color-text-primary;
 
@@ -27,5 +32,13 @@ body {
 
   &.inverse {
     background: $color-text-inverse;
+  }
+
+  &--left {
+    height: 100%;
+    width: 2px;
+    top: 0;
+    left: 0;
+    margin: 0;
   }
 }

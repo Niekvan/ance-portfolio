@@ -3,31 +3,48 @@
     <div ref="container" class="wrapper">
       <div class="container__content" :style="{ transform: `translateX(${scrollLeft}px)` }">
         <div class="panel text-panel text-panel--details">
-          <p>Details</p>
+          <p 
+            v-for="(detail, index) in $page.project.content.details"
+            :key="`detail-${index}`"
+            class="body detail"
+          >{{ detail.text }}</p>
         </div>
         <div class="panel text-panel text-panel--description">
-          <h1 class="heading heading--1 title" v-html="$page.pageProject.content.title" />
-          <p class="content" v-html="$page.pageProject.content.description" />
+          <h1 class="heading heading--1 title" v-html="$page.project.content.title" />
+          <p class="content" v-html="$page.project.content.description" />
         </div>
-         <r-img class="panel image-panel" :image="$page.pageProject.content.main_image" alt="Project image" />
-        <r-img 
-          v-for="(slide, index) in $page.pageProject.content.slides" 
+        <p-img 
+          v-for="(slide, index) in $page.project.content.slides" 
           :key="`image-${index}`" 
           class="panel image-panel" 
           :image="slide.image" 
           :alt="slide.description"
         />
+        <div class="panel">
+          <div class="grid">
+            <div class="col-desk-2" />
+             <div class="col-desk-1">
+                <span class="line line--left"/>
+             </div>
+             <div class="col-desk-2 v-center">
+               <p class="body contact">
+                  For more information please contact:<br>
+                  <a href="mailto:info@ance.xyz">info@ance.xyz</a>
+               </p>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import resizedImage from '~/components/resizedImage.vue'
+import projectImage from '~/components/projectImage.vue'
 
 export default {
   components: {
-    'r-img': resizedImage
+    'p-img': projectImage
   },
   data() {
     return {
@@ -113,6 +130,10 @@ export default {
 
   &__content {
     height: 100%;
+    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000;
     transition: transform 1s ease-out;
 
     @include breakpoint(tablet, max) {
@@ -125,6 +146,15 @@ export default {
       min-width: 150vw;
       width: auto;
       padding-right: $margin-side-tablet + $margin-gutter-tablet;
+    }
+
+    .grid {
+      width: 75vw;
+      height: 100%;
+    }
+
+    .detail {
+      white-space: pre-wrap;
     }
   }
 
@@ -178,17 +208,22 @@ export default {
 
 <page-query>
 query project($id: ID!) {
-  pageProject(id: $id) {
-    id,
+  project(id: $id) {
+    id
+    path
     content {
-      title,
-      description,
-      main_image,
+      title
+      description
+      details {
+        text
+      }
+      main_image {
+        description
+        image
+      }
       slides {
-          description,
-          image,
-          settings,
-          width,
+          description
+          image
       }
     }
   }

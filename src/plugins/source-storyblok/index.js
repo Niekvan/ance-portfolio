@@ -19,11 +19,11 @@ class StoryblokSource {
         const client = new StoryblokClient({ accessToken });
         const stories = [];
 
-        console.log(contentTypes);
-
         for (let index = 0; index < contentTypes.length; index++) {
             const type = contentTypes[index];
             const response = await client.get('cdn/stories', {
+                version: 'draft',
+                sort_by: 'position:desc',
                 filter_query: {
                     component: {
                         in: type

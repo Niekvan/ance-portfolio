@@ -19,16 +19,18 @@ module.exports = {
     })
   },
   siteName: 'Portfolio Ance',
+  siteDescription: 'Ance Janevica is a multidisciplinary designer with a focus on research design.',
   plugins: [
     {
       use: path.resolve('./src/plugins/source-storyblok'),
       options: {
         accessToken: process.env.STORYBLOK_TOKEN,
-        contentTypes: ['page_project']
+        contentTypes: ['project', 'about']
       }
     }
   ],
   templates: {
-    page_project: '/:slug'
+    project: '/work/:slug'
   }
 }
+
