@@ -27,6 +27,21 @@ module.exports = {
         accessToken: process.env.STORYBLOK_TOKEN,
         contentTypes: ['project', 'about']
       }
+    },
+    {
+      use: 'gridsome-plugin-pwa',
+      options: {
+        title: 'Ance Janevica',
+        startUrl: '/',
+        display: 'standalone',
+        statusBarStyle: 'default',
+        manifestPath: 'manifest.json',
+        serviceWorkerPath: 'service-worker.js',
+        shortName: 'Ance Janevica',
+        themeColor: '#030718',
+        backgroundColor: '#EDEDED',
+        icon: './src/favicon.png'
+      }
     }
   ],
   templates: {

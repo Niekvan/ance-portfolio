@@ -23,13 +23,25 @@ p {
 p,
 .body {
   font-weight: 400;
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   line-height: 1.5;
+
+  @include breakpoint(tablet, min) {
+    font-size: 1.125rem;
+  }
 
   &--large {
     font-weight: 400;
-    font-size: 2.5rem;
     line-height: 1.5;
+    font-size: 1.5rem;
+    
+    @include breakpoint(tablet, min) {
+      font-size: 2rem;
+    }
+    
+    @include breakpoint(desktop, min) {
+      font-size: 2.5rem;
+    }
   }
 }
 

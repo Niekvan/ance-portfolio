@@ -18,7 +18,7 @@
           {{index +1}}/{{$page.allProject.edges.length}}
         </p>
         <p class="project__details project__details--year col-desk-2 col-desk-shift-2 col-mob-2 col-mob-shift-0 inverse">
-          2019
+          {{ edge.node.content.year }}
         </p>
       </g-link>
     </div>
@@ -101,6 +101,7 @@ query {
         path
         content {
           title
+          year
           main_image {
             description
             image

@@ -24,7 +24,6 @@ export default {
   },
   computed: {
     inverse() {
-      console.log(this.$route.path)
       return this.$route.path === '/' || this.$route.path.includes('/about')
     }
   },

@@ -35,6 +35,8 @@ export default {
   background: $background-color-inverse;
   transition-duration: 0.35s;
 
+  z-index: 999;
+
   .heading {
     position: relative;
     top: 50%;
@@ -51,6 +53,8 @@ export default {
   width: 0;
   background: $background-color-inverse;
   transition-duration: 0.35s;
+
+  z-index: 999;
 }
 
 .overlay-left-full-enter ~ .overlay-right {

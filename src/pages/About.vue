@@ -27,7 +27,7 @@
         </div>
       </div>
       <p
-        class="col-desk-4 col-desk-shift-1 text body--large"
+        class="col-desk-4 col-desk-shift-1 col-mob-4 col-mob-shift-0 text body--large"
       >
         {{ story.content.body }}
       </p>
@@ -123,8 +123,12 @@ export default {
     white-space: nowrap;
 
     position: absolute;
-    width: 100%;
-    padding-left: 100%;
+    width: auto;
+    padding-left: 150%;
+
+    @include breakpoint(tablet, min) {
+      padding-left: 100%
+    }
 
     animation: scroll-left 40s linear infinite;
 
@@ -141,6 +145,12 @@ export default {
   &__item {
     color: $color-text-inverse;
     text-decoration: none;
+    flex-grow: 1;
+    padding: 0 1rem;
+
+    @include breakpoint(tablet, min) {
+      padding: 0;
+    }
   }
 
   &::after {
@@ -165,7 +175,7 @@ export default {
 }
 
 .text {
-  padding: 4 * $margin-top-phone 0;
+  padding: $margin-top-phone 0;
 
   @include breakpoint(tablet, min) {
     padding: 4 * $margin-top-tablet 0;
@@ -177,7 +187,11 @@ export default {
     transform: translate(0, 0);
   }
   100% {
-    transform: translate(-100%, 0);
+    transform: translate(-125%, 0);
+
+    @include breakpoint(tablet, min) {
+      transform: translate(-100%, 0);
+    }
   }
 }
 </style>

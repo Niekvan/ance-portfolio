@@ -1,17 +1,21 @@
 <template>
   <div class="loading image__wrapper" :style="padding">
-    <img 
-      v-if="imageSrc" 
-      :data-src="imageSrc" 
-      :data-srcset="imageSrcset" 
-      data-sizes="auto" 
-      class="image lazyload"
-      :alt="description"
-    >
+    <picture v-if="imageSrc" >
+      <source :data-srcset="imageSrcsetWebp" type="image/webp" />
+      <source :data-srcset="imageSrcset" />
+      <img 
+        data-sizes="auto"
+        :data-src="imageSrc"
+        :alt="description"
+        class="image lazyload"
+      >
+    </picture>
   </div>
 </template>
 
 <script>
+// import 'lazysizes/plugins/blur-up/ls.blur-up'
+
 export default {
   props: {
     image: {
@@ -44,11 +48,17 @@ export default {
       }
       return this.image.replace('//a.storyblok.com', 'https://img2.storyblok.com/700x0')
     },
+    imageSrcsetWebp() {
+      if (!this.image) {
+        return null
+      }
+      return this.sizes.map((size) => `${this.resizeUrl(this.image, size, true)} ${size}w`)
+    },
     imageSrcset() {
       if (!this.image) {
         return null
       }
-      return this.sizes.map((size) => `${this.resizeUrl(this.image, size)} ${size}w`)
+      return this.sizes.map((size) => `${this.resizeUrl(this.image, size, false)} ${size}w`)
     }
   },
   mounted() {
@@ -64,8 +74,12 @@ export default {
     })
   },
   methods: {
-    resizeUrl(link, size) {
-      return `https://img2.storyblok.com/${size}x0${link.replace('//a.storyblok.com', '')}`
+    resizeUrl(link, size, webp) {
+      if (webp) {
+        return `https://img2.storyblok.com/${size}x0/filters:format(webp)${link.replace('//a.storyblok.com', '')}`
+      } else {
+        return `https://img2.storyblok.com/${size}x0${link.replace('//a.storyblok.com', '')}`
+      }
     }
   }
 }
@@ -77,6 +91,7 @@ export default {
     position: relative;
     overflow: hidden;
     background: linear-gradient(rgba($background-color, 1) 66%, rgba($background-color, 0));
+    transition: background 0.4s;
 
     &.image-loaded {
       background: transparent;
@@ -93,13 +108,10 @@ export default {
 
 .lazyload,
 .lazyloading {
-  opacity: 0; }
-
-.loading,
-.lazyload,
-.lazyloaded,
-.image {
-  opacity: 1;
-  transition: 2s cubic-bezier(0.215, 0.61, 0.355, 1);
+	opacity: 0;
+}
+.lazyloaded {
+	opacity: 1;
+	transition: opacity 300ms;
 }
 </style>
