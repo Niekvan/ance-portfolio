@@ -123,12 +123,8 @@ export default {
     white-space: nowrap;
 
     position: absolute;
-    width: auto;
-    padding-left: 150%;
-
-    @include breakpoint(tablet, min) {
-      padding-left: 100%
-    }
+    width: 100%;
+    padding-left: 100%;
 
     animation: scroll-left 40s linear infinite;
 
@@ -187,11 +183,7 @@ export default {
     transform: translate(0, 0);
   }
   100% {
-    transform: translate(-125%, 0);
-
-    @include breakpoint(tablet, min) {
-      transform: translate(-100%, 0);
-    }
+    transform: translate(-100%, 0);
   }
 }
 </style>

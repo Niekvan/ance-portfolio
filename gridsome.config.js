@@ -19,6 +19,7 @@ module.exports = {
     })
   },
   siteName: 'Portfolio Ance',
+  siteUrl: process.env.URL,
   siteDescription: 'Ance Janevica is a multidisciplinary designer with a focus on research design.',
   plugins: [
     {
@@ -42,6 +43,9 @@ module.exports = {
         backgroundColor: '#EDEDED',
         icon: './src/favicon.png'
       }
+    },
+    {
+      use: '@gridsome/plugin-sitemap'
     }
   ],
   templates: {

@@ -78,6 +78,10 @@ export default {
 
     .nav__text {
       color: $color-text-inverse;
+
+      &::after {
+        background: $background-color;
+      }
     }
 
     .loader {
@@ -105,6 +109,12 @@ export default {
     @include breakpoint(tablet, min) {
       width: $margin-side-tablet;
       top: $margin-top-tablet;
+
+      .active--exact {
+        &::after {
+          width: 100%;
+        }
+      }
     }
 
     &--home {
@@ -121,6 +131,24 @@ export default {
     text-transform: uppercase;
     text-decoration: none;
     color: $color-text-primary;
+    position: relative;
+
+    &::after {
+      content: '';
+      height: 2px;
+      width: 0;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      background: $background-color-inverse;
+      transition: width 0.3s;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+    }
 
     &--left {
       transform: rotate(-90deg) translateX(-35%) translateY(-30%);

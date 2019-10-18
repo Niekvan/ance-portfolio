@@ -1,7 +1,14 @@
 <template>
   <div class="container">
-    <div class="project" v-for="(edge, index) in $page.allProject.edges" :key="edge.node.id">
-      <g-link class="grid project__link" :to="edge.node.path">
+    <div 
+      v-for="(edge, index) in $page.allProject.edges" 
+      :key="edge.node.id"
+      class="project"
+    >
+      <g-link 
+        class="grid project__link" 
+        :to="edge.node.path"
+      >
         <h3 class="project__heading heading heading--1 col-desk-2 col-mob-4 inverse">
           {{ edge.node.content.title }}
         </h3>
@@ -33,7 +40,11 @@ export default {
   components: {
     'r-img': resizedImage
   },
-
+  methods: {
+    handleMouseover(e) {
+      console.log(e, e.clientX)
+    }
+  }
 }
 </script>
 
@@ -53,7 +64,6 @@ export default {
 }
 
 .project {
-
   position: relative;
 
   &__link {

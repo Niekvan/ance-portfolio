@@ -38,10 +38,6 @@ p,
     @include breakpoint(tablet, min) {
       font-size: 2rem;
     }
-    
-    @include breakpoint(desktop, min) {
-      font-size: 2.5rem;
-    }
   }
 }
 
