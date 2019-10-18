@@ -11,7 +11,7 @@
         </div>
         <div class="panel text-panel text-panel--description">
           <h1 class="heading heading--1 title" v-html="$page.project.content.title" />
-          <p class="content" v-html="$page.project.content.description" />
+          <p class="content" v-html="body" />
         </div>
         <p-img 
           v-for="(slide, index) in $page.project.content.slides" 
@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import marked from 'marked'
 import projectImage from '~/components/projectImage.vue'
 
 export default {
@@ -65,6 +66,9 @@ export default {
         .replace(/'/g, "")
         .replace(/"/g, "")
         .split(", ")[0]
+    },
+    body() {
+      return marked(this.$page.project.content.description)
     }
   },
   mounted() {
@@ -233,6 +237,12 @@ export default {
         margin-right: $margin-gutter-tablet;
       }
     }
+
+    .contact {
+      a {
+        color: $color-text-primary;
+      }
+    }
   }
 
   .text-panel {
@@ -246,6 +256,7 @@ export default {
     }
 
     &--description {
+      overflow-y: auto;
       @include breakpoint(tablet, min) {
         width: calc(100vw / 6 * 2);
       }
@@ -264,6 +275,16 @@ export default {
     @include breakpoint(tablet, min) {
       height: 100%;
       width: auto;
+    }
+
+    &:not(:first-child) {
+      @include breakpoint(tablet, min) {
+        margin-left: $grid-col-tablet;
+      }
+
+      @include breakpoint(desktop, min) {
+        margin-left: $grid-col-desktop;
+      }
     }
   }
 }

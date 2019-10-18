@@ -37,6 +37,10 @@ $margin-gutter-desktop: 40px;
 $margin-gutter-tablet: 40px;
 $margin-gutter-phone: 16px;
 
+// SINGLE COLUMN SPACING
+$grid-col-desktop: calc((100vw - #{2 * $margin-side-desktop}) / #{$grid-desktop-columns} + 2 * #{$grid-desktop-gutter});
+$grid-col-tablet: calc((100vw - #{2 * $margin-side-tablet}) / #{$grid-tablet-columns} + 2 * #{$grid-tablet-gutter});
+
 // COLORS
 $primary: #030718;
 $inverse: #EDEDED;

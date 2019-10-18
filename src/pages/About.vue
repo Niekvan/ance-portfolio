@@ -6,7 +6,7 @@
       </div>
       <div class="col-desk-6 scroll body">
         <div class="scroll__wrapper">
-          <p class="scroll__items scroll__items--1">
+          <div class="scroll__items scroll__items--1">
             <span 
               v-for="(item, index) in story.content.scroll_skills"
               :key="`item-${index}-1`"
@@ -14,8 +14,8 @@
             >
               {{ item.text }}
             </span>
-          </p>
-          <p class="scroll__items scroll__items--2">
+          </div>
+          <!-- <p class="scroll__items scroll__items--2">
             <span 
               v-for="(item, index) in story.content.scroll_skills"
               :key="`item-${index}-2`"
@@ -23,20 +23,16 @@
             >
               {{ item.text }}
             </span>
-          </p>
+          </p> -->
         </div>
       </div>
-      <p
-        class="col-desk-4 col-desk-shift-1 col-mob-4 col-mob-shift-0 text body--large"
-      >
-        {{ story.content.body }}
-      </p>
+       <div class="col-desk-4 col-desk-shift-1 col-mob-4 col-mob-shift-0 text body--large" v-html="body" />
       <div class="col-desk-6 image">
         <r-img :image="story.content.lower_image" :description="story.content.lower_image_description" />
       </div>
       <div class="col-desk-6 scroll scroll--contact body">
         <div class="scroll__wrapper">
-          <p class="scroll__items scroll__items--1">
+          <div class="scroll__items scroll__items--1">
             <a 
               v-for="(item, index) in story.content.scroll_contact" 
               :key="`contact-${index}-1`" 
@@ -47,8 +43,8 @@
             >
               {{ item.text }}
             </a>
-          </p>
-          <p class="scroll__items scroll__items--2">
+          </div>
+          <!-- <p class="scroll__items scroll__items--2">
             <a 
               v-for="(item, index) in story.content.scroll_contact" 
               :key="`contact-${index}-2`" 
@@ -59,7 +55,7 @@
             >
               {{ item.text }}
             </a>
-          </p>
+          </p> -->
         </div>
       </div>
     </div>
@@ -67,6 +63,7 @@
 </template>
 
 <script>
+import marked from 'marked'
 import resizedImage from '~/components/resizedImage.vue'
 
 export default {
@@ -80,6 +77,11 @@ export default {
   data() {
     return {
       story: null
+    }
+  },
+  computed: {
+    body() {
+      return marked(this.$page.allAbout.edges[0].node.content.body)
     }
   },
   created() {
@@ -124,17 +126,21 @@ export default {
 
     position: absolute;
     width: 100%;
-    padding-left: 100%;
 
     animation: scroll-left 40s linear infinite;
+    animation-play-state: running;
+
+    &:hover {
+      animation-play-state: paused;
+    }
 
     &--1 {
       z-index: 1;
     }
 
-    &--2 {
-      animation-delay: 20s;
-    }
+    // &--2 {
+    //   animation-delay: 20s;
+    // }
 
   }
 
@@ -143,6 +149,7 @@ export default {
     text-decoration: none;
     flex-grow: 1;
     padding: 0 1rem;
+    text-align: center;
 
     @include breakpoint(tablet, min) {
       padding: 0;
@@ -180,7 +187,7 @@ export default {
 
 @keyframes scroll-left {
   0% {
-    transform: translate(0, 0);
+    transform: translate(100%, 0);
   }
   100% {
     transform: translate(-100%, 0);
@@ -205,6 +212,7 @@ query {
           lower_image_description
           scroll_contact {
             text
+            link
           }
         }
       }

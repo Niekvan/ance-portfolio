@@ -75,6 +75,7 @@ export default {
     font-weight: 300;
 
     margin: 0;
+    margin-bottom: -0.25em;
     align-self: flex-end;
   }
 
@@ -92,11 +93,19 @@ export default {
 
   }
 
-  &:not(:last-child) {
-    margin-bottom: $margin-top-phone;
+  &:first-child {
+    margin-top: $margin-top-phone;
 
     @include breakpoint(tablet, min) {
-      margin-bottom: $margin-top-tablet;
+      margin-top: $margin-top-tablet;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: $margin-side-phone;
+
+    @include breakpoint(tablet, min) {
+      margin-bottom: $margin-side-tablet;
     }
   }
 }
