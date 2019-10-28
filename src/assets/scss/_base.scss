@@ -27,8 +27,14 @@ body {
   height: 2px;
   background: $color-text-primary;
 
-  margin-top: $margin-top-desktop / 2;
-  margin-bottom: $margin-top-desktop / 2;
+  margin-top: $margin-top-phone;
+  margin-bottom: $margin-top-phone;
+
+  @include breakpoint(tablet, min) {
+    margin-top: $margin-top-desktop / 2;
+    margin-bottom: $margin-top-desktop / 2;
+  }
+
 
   &.inverse {
     background: $color-text-inverse;

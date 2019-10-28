@@ -73,10 +73,14 @@ export default {
   &__heading {
     font-size: 3rem;
     font-weight: 300;
+    margin-bottom: $margin-top-phone;
 
-    margin: 0;
-    margin-bottom: -0.25em;
-    align-self: flex-end;
+    @include breakpoint(tablet, min) {
+      margin: 0;
+      margin-bottom: -0.25em;
+      align-self: flex-end;
+    }
+
   }
 
   &__image {
@@ -84,7 +88,7 @@ export default {
     width: 100%;
   }
 
-  &__details {
+  &__details {  
     position: relative;
 
     &--year {
@@ -102,7 +106,7 @@ export default {
   }
 
   &:not(:last-child) {
-    margin-bottom: $margin-side-phone;
+    margin-bottom: $margin-side-phone * 2;
 
     @include breakpoint(tablet, min) {
       margin-bottom: $margin-side-tablet;
