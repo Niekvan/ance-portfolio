@@ -10,7 +10,7 @@
     "@gridsome/plugin-sitemap": "^0.2.2",
     "gridsome": "^0.7.8",
     "gridsome-plugin-pwa": "0.0.8",
-    "lazysizes": "^5.1.2",
+    "lazysizes": "^5.2.1",
     "marked": "^0.7.0",
     "normalize.css": "^8.0.1",
     "storyblok-js-client": "^2.0.8"
