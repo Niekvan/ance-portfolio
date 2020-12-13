@@ -22,7 +22,7 @@ class StoryblokSource {
         for (let index = 0; index < contentTypes.length; index++) {
             const type = contentTypes[index];
             const response = await client.get('cdn/stories', {
-                version: 'draft',
+                version: 'published',
                 sort_by: 'position:desc',
                 filter_query: {
                     component: {

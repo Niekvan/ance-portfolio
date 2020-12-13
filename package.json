@@ -7,17 +7,18 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
-    "@gridsome/plugin-sitemap": "^0.2.2",
+    "@gridsome/plugin-sitemap": "^0.4.0",
     "gridsome": "^0.7.8",
-    "gridsome-plugin-pwa": "0.0.8",
+    "gridsome-plugin-pwa": "^0.0.18",
     "lazysizes": "^5.1.2",
-    "marked": "^0.7.0",
+    "marked": "^1.2.6",
     "normalize.css": "^8.0.1",
-    "storyblok-js-client": "^2.0.8"
+    "storyblok": "^3.6.0",
+    "storyblok-js-client": "^3.2.0"
   },
   "devDependencies": {
-    "node-sass": "^4.12.0",
-    "sass-loader": "^8.0.0",
+    "node-sass": "^5.0.0",
+    "sass-loader": "^10.1.0",
     "style-resources-loader": "^1.2.1"
   }
 }
