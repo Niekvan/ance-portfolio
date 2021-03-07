@@ -34,17 +34,8 @@ const meta = [
   }
 ]
 
-const links = [
-  {
-    src: 'https://scripts.withcabin.com/hello.js',
-    defer: true,
-    async: true,
-  }
-]
-
 export default function (Vue, { head }) {
   // Set default layout as a global component
   Vue.component('Layout', DefaultLayout)
   head.meta.push(...meta)
-  head.link.push(...links)
 }
