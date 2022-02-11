@@ -17,7 +17,7 @@
     "storyblok-js-client": "^3.2.0"
   },
   "devDependencies": {
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^10.1.0",
     "style-resources-loader": "^1.2.1"
   }
