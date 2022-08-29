@@ -1,37 +1,52 @@
 <template>
   <div class="container">
     <div ref="container" class="wrapper">
-      <div class="container__content" :style="{ transform: `translateX(${scrollLeft}px)` }">
+      <div
+        class="container__content"
+        :style="{ transform: `translateX(${scrollLeft}px)` }"
+      >
         <div class="panel text-panel text-panel--details">
-          <p 
+          <p
             v-for="(detail, index) in $page.project.content.details"
             :key="`detail-${index}`"
             class="body detail"
-          >{{ detail.text }}</p>
+          >
+            {{ detail.text }}
+          </p>
         </div>
         <div class="panel text-panel text-panel--description">
-          <h1 class="heading heading--1 title" v-html="$page.project.content.title" />
+          <h1
+            class="heading heading--1 title"
+            v-html="$page.project.content.title"
+          />
           <p class="content" v-html="body" />
         </div>
-        <p-img 
-          v-for="(slide, index) in $page.project.content.slides" 
-          :key="`image-${index}`" 
-          class="panel image-panel" 
-          :image="slide.image" 
-          :alt="slide.description"
-        />
+        <template v-for="(slide, index) in $page.project.content.slides">
+          <p-video
+            v-if="slide.component === 'video_slide'"
+            :key="`video-${index}`"
+            :video="slide.video"
+          />
+          <p-img
+            v-else
+            :key="`image-${index}`"
+            class="panel image-panel"
+            :image="slide.image"
+            :alt="slide.description"
+          />
+        </template>
         <div class="panel">
           <div class="grid">
             <div class="col-desk-2" />
-             <div class="col-desk-1">
-                <span class="line line--left"/>
-             </div>
-             <div class="col-desk-2 v-center">
-               <p class="body contact">
-                  For more information please contact:<br>
-                  <a href="mailto:info@ance.xyz">info@ance.xyz</a>
-               </p>
-              </div>
+            <div class="col-desk-1">
+              <span class="line line--left" />
+            </div>
+            <div class="col-desk-2 v-center">
+              <p class="body contact">
+                For more information please contact:<br />
+                <a href="mailto:info@ance.xyz">info@ance.xyz</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -40,12 +55,14 @@
 </template>
 
 <script>
-import marked from 'marked'
-import projectImage from '~/components/projectImage.vue'
+import marked from 'marked';
+import projectImage from '~/components/projectImage.vue';
+import vimeoVideo from '~/components/vimeoVideo.vue';
 
 export default {
   components: {
-    'p-img': projectImage
+    'p-img': projectImage,
+    'p-video': vimeoVideo,
   },
   data() {
     return {
@@ -53,108 +70,124 @@ export default {
       maxScroll: 0,
       startX: 0,
       touchMove: 0,
-      moveX: 0
-    }
+      moveX: 0,
+    };
   },
   computed: {
     device() {
       if (!window) {
-        return
-      } return window
+        return;
+      }
+      return window
         .getComputedStyle(this.$refs.container, '::before')
         .getPropertyValue('content')
-        .replace(/'/g, "")
-        .replace(/"/g, "")
-        .split(", ")[0]
+        .replace(/'/g, '')
+        .replace(/"/g, '')
+        .split(', ')[0];
     },
     body() {
-      return marked(this.$page.project.content.description)
-    }
+      return marked(this.$page.project.content.description);
+    },
   },
   mounted() {
     if (this.device !== 'phone') {
-      window.addEventListener('wheel', this.handleScroll, { passive: true })
-      window.addEventListener('touchstart', this.handleTouchStart)
-      window.addEventListener('touchmove', this.handleTouchMove)
-      window.addEventListener('touchend', this.handleTouchEnd)
+      document.body.addEventListener('wheel', this.handleScroll, {
+        passive: true,
+      });
+      document.body.addEventListener('touchstart', this.handleTouchStart);
+      document.body.addEventListener('touchmove', this.handleTouchMove);
+      document.body.addEventListener('touchend', this.handleTouchEnd);
     }
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener('resize', this.handleResize);
   },
   beforeDestroy() {
     if (this.device !== 'phone') {
-      window.removeEventListener('wheel', this.handleScroll, { passive: true })
-      window.removeEventListener('touchstart', this.handleTouchStart)
-      window.removeEventListener('touchmove', this.handleTouchMove)
-      window.removeEventListener('touchend', this.handleTouchEnd)
+      document.body.removeEventListener('wheel', this.handleScroll, {
+        passive: true,
+      });
+      document.body.removeEventListener('touchstart', this.handleTouchStart);
+      document.body.removeEventListener('touchmove', this.handleTouchMove);
+      document.body.removeEventListener('touchend', this.handleTouchEnd);
     }
-    window.removeEventListener('resize', this.handleResize)
+    window.removeEventListener('resize', this.handleResize);
   },
   methods: {
     handleScroll(e) {
-      this.maxScroll = this.$refs.container.getBoundingClientRect().width - window.innerWidth
-      const delta = e.wheelDelta || e.deltaX * 100 || e.deltaY * 100
-      if (!(Math.abs(this.scrollLeft + delta) > this.maxScroll) && (this.scrollLeft + delta) <= 0) {
-        this.scrollLeft += delta
+      this.maxScroll =
+        this.$refs.container.getBoundingClientRect().width - window.innerWidth;
+      const delta = e.wheelDelta || e.deltaX * 100 || e.deltaY * 100;
+      if (
+        !(Math.abs(this.scrollLeft + delta) > this.maxScroll) &&
+        this.scrollLeft + delta <= 0
+      ) {
+        this.scrollLeft += delta;
       } else if (Math.abs(this.scrollLeft + delta) > this.maxScroll) {
-        this.scrollLeft = -this.maxScroll
-      } else if ((this.scrollLeft + delta) > 0) {
-        this.scrollLeft = 0
+        this.scrollLeft = -this.maxScroll;
+      } else if (this.scrollLeft + delta > 0) {
+        this.scrollLeft = 0;
       }
     },
     handleTouchStart(e) {
-      this.maxScroll = this.$refs.container.getBoundingClientRect().width - window.innerWidth
-      this.startX = e.touches[0].pageX
+      this.maxScroll =
+        this.$refs.container.getBoundingClientRect().width - window.innerWidth;
+      this.startX = e.touches[0].pageX;
     },
     handleTouchMove(e) {
-      const touch = e.touches[0].pageX
-      const move = this.startX - touch
-      if (Math.abs(this.moveX + move) < this.maxScroll && this.moveX + move >= 0) {
-        this.scrollLeft = -(this.moveX + move)
-        this.touchMove = move
+      const touch = e.touches[0].pageX;
+      const move = this.startX - touch;
+      if (
+        Math.abs(this.moveX + move) < this.maxScroll &&
+        this.moveX + move >= 0
+      ) {
+        this.scrollLeft = -(this.moveX + move);
+        this.touchMove = move;
       } else if (Math.abs(this.moveX + move) >= this.maxScroll) {
-        this.scrollLeft = -this.maxScroll
-        this.moveX = this.maxScroll
+        this.scrollLeft = -this.maxScroll;
+        this.moveX = this.maxScroll;
       } else if (this.moveX + move < 0) {
-        this.scrollLeft = 0
-        this.moveX = 0
+        this.scrollLeft = 0;
+        this.moveX = 0;
       }
     },
     handleTouchEnd(e) {
-      this.moveX += this.touchMove
+      this.moveX += this.touchMove;
     },
     handleResize(e) {
       const device = window
         .getComputedStyle(this.$refs.container, '::before')
         .getPropertyValue('content')
-        .replace(/'/g, "")
-        .replace(/"/g, "")
-        .split(", ")[0]
+        .replace(/'/g, '')
+        .replace(/"/g, '')
+        .split(', ')[0];
 
-      this.maxScroll = this.$refs.container.getBoundingClientRect().width - window.innerWidth
+      this.maxScroll =
+        this.$refs.container.getBoundingClientRect().width - window.innerWidth;
 
       if (Math.abs(this.moveX) >= this.maxScroll) {
-        this.scrollLeft = -this.maxScroll
-        this.moveX = this.maxScroll
+        this.scrollLeft = -this.maxScroll;
+        this.moveX = this.maxScroll;
       } else if (this.moveX < 0) {
-        this.scrollLeft = 0
-        this.moveX = 0
+        this.scrollLeft = 0;
+        this.moveX = 0;
       }
 
-      if(device === 'phone') {
+      if (device === 'phone') {
         this.scrollLeft = 0;
-        window.removeEventListener('wheel', this.handleScroll, { passive: true })
-        window.removeEventListener('touchstart', this.handleTouchStart)
-        window.removeEventListener('touchmove', this.handleTouchMove)
-        window.removeEventListener('touchend', this.handleTouchEnd)
+        window.removeEventListener('wheel', this.handleScroll, {
+          passive: true,
+        });
+        window.removeEventListener('touchstart', this.handleTouchStart);
+        window.removeEventListener('touchmove', this.handleTouchMove);
+        window.removeEventListener('touchend', this.handleTouchEnd);
       } else {
-        window.addEventListener('wheel', this.handleScroll, { passive: true })
-        window.addEventListener('touchstart', this.handleTouchStart)
-        window.addEventListener('touchmove', this.handleTouchMove)
-        window.addEventListener('touchend', this.handleTouchEnd)
+        window.addEventListener('wheel', this.handleScroll, { passive: true });
+        window.addEventListener('touchstart', this.handleTouchStart);
+        window.addEventListener('touchmove', this.handleTouchMove);
+        window.addEventListener('touchend', this.handleTouchEnd);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -164,7 +197,6 @@ export default {
   height: auto;
   width: calc(100vw - #{2 * $margin-side-phone});
   padding: $margin-top-phone $margin-side-phone;
-
 
   @include breakpoint(tablet, min) {
     flex-direction: row;
@@ -308,6 +340,16 @@ query project($id: ID!) {
       slides {
           description
           image
+          component
+          video {
+            vimeo_oembed {
+              response {
+                width
+                height
+                video_id
+              }
+            }
+          }
       }
     }
   }
